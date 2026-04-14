@@ -20,14 +20,15 @@ export default function EventDetailPage() {
   useEffect(() => {
     async function fetchEventDetails() {
       try {
-        const data = await eventApi.getEvent(id as string);
-        setEvent(data.event);
+        const response = await eventApi.getEvent(id as string);
+        const eventData = response.data;
+        setEvent(eventData);
         
         // Check if already registered
         const token = localStorage.getItem("auth_token");
-        if (token) {
-          const myRegs = await registrationApi.getMyRegistrations();
-          const already = myRegs.registrations.some((r: any) => r.event._id === (id as string));
+        if (token && eventData) {
+          const myRegsResponse = await registrationApi.getMyRegistrations();
+          const already = myRegsResponse.data?.registrations.some((r: any) => r.event._id === (id as string));
           setIsRegistered(already);
         }
       } catch (err: any) {

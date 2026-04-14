@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import NavigationWrapper from "@/components/NavigationWrapper";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
@@ -29,8 +29,9 @@ export default function RootLayout({
       className={`${plusJakarta.variable} ${outfit.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-black text-white selection:bg-primary/30">
-        <Navbar />
-        <main className="flex-1 pt-24">{children}</main>
+        <NavigationWrapper>
+          {children}
+        </NavigationWrapper>
         
         {/* Abstract Background Elements */}
         <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
