@@ -43,6 +43,9 @@ export const authApi = {
 export const eventApi = {
   getEvents: (page = 1, limit = 10) => apiFetch(`/api/events?page=${page}&limit=${limit}`),
   getEvent: (id: string) => apiFetch(`/api/events/${id}`),
+  createEvent: (eventData: any) => apiFetch("/api/events", { method: "POST", data: eventData }),
+  getEventRegistrations: (id: string, page = 1, limit = 20) => 
+    apiFetch(`/api/events/${id}/registrations?page=${page}&limit=${limit}`),
 };
 
 export const registrationApi = {
