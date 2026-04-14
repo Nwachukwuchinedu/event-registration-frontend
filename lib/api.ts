@@ -25,6 +25,10 @@ export async function apiFetch(endpoint: string, options: FetchOptions = {}) {
     const result = await response.json();
 
     if (!response.ok) {
+      // Handle validation errors specifically by surfacing the first error message
+      if (response.status === 422 && result.errors && result.errors.length > 0) {
+        throw new Error(result.errors[0].message);
+      }
       throw new Error(result.message || "An error occurred while fetching data.");
     }
 

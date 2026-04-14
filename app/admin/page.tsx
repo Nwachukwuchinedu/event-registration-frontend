@@ -17,6 +17,7 @@ export default function AdminDashboard() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newCard, setNewCard] = useState({ title: "", description: "", date: "", location: "", capacity: 50 });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
 
   useEffect(() => {
     const userStr = localStorage.getItem("user");
@@ -33,8 +34,8 @@ export default function AdminDashboard() {
 
   async function fetchEvents() {
     try {
-      const data = await eventApi.getEvents(1, 100);
-      setEvents(data.events || []);
+      const response = await eventApi.getEvents(1, 100);
+      setEvents(response.data?.events || []);
     } catch (error) {
       console.error("Failed to fetch events:", error);
     } finally {
@@ -45,13 +46,19 @@ export default function AdminDashboard() {
   const handleCreateEvent = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setFormError("");
     try {
-      await eventApi.createEvent(newCard);
+      // Ensure date is ISO formatted
+      const formattedData = {
+        ...newCard,
+        date: new Date(newCard.date).toISOString()
+      };
+      await eventApi.createEvent(formattedData);
       setShowCreateModal(false);
       setNewCard({ title: "", description: "", date: "", location: "", capacity: 50 });
       fetchEvents();
     } catch (error: any) {
-      alert(error.message || "Failed to create event");
+      setFormError(error.message || "Failed to create event");
     } finally {
       setIsSubmitting(false);
     }
@@ -190,6 +197,16 @@ export default function AdminDashboard() {
                       className="w-full h-12 bg-white/5 border border-white/10 rounded-xl px-4 focus:outline-none focus:ring-2 focus:ring-primary/50"
                     />
                   </div>
+
+                  {formError && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      className="text-red-400 text-xs font-bold text-center bg-red-400/10 py-3 rounded-xl border border-red-400/20"
+                    >
+                      {formError}
+                    </motion.div>
+                  )}
 
                   <button
                     disabled={isSubmitting}

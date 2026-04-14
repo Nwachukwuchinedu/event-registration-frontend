@@ -15,8 +15,9 @@ export default function EventsPage() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const data = await eventApi.getEvents();
-        setEvents(data.events || []);
+        const response = await eventApi.getEvents();
+        // The backend wraps results in a 'data' property
+        setEvents(response.data?.events || []);
       } catch (error) {
         console.error("Failed to fetch events:", error);
       } finally {

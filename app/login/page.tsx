@@ -22,10 +22,16 @@ export default function LoginPage() {
 
     try {
       const response = await authApi.login({ email, password });
-      localStorage.setItem("auth_token", response.token);
-      localStorage.setItem("user", JSON.stringify(response.user));
+      const userData = response.data;
       
-      if (response.user.role === "admin") {
+      if (!userData || !userData.user) {
+        throw new Error("Invalid response from server");
+      }
+
+      localStorage.setItem("auth_token", userData.token);
+      localStorage.setItem("user", JSON.stringify(userData.user));
+      
+      if (userData.user.role === "admin") {
         router.push("/admin");
       } else {
         router.push("/dashboard");
