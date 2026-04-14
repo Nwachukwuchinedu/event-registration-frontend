@@ -9,15 +9,25 @@ import { cn } from "@/lib/utils";
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Placeholder for auth state
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) setUser(JSON.parse(storedUser));
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("auth_token");
+    localStorage.removeItem("user");
+    setUser(null);
+    window.location.href = "/";
+  };
 
   return (
     <nav
@@ -39,14 +49,26 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           <NavLink href="/events">Events</NavLink>
-          {isLoggedIn ? (
+          {user ? (
             <>
+              {user.role === "admin" && (
+                <NavLink href="/admin" className="text-emerald-400 font-bold border-r border-white/10 pr-8">
+                  Admin Panel
+                </NavLink>
+              )}
               <NavLink href="/dashboard">Dashboard</NavLink>
-              <button className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-sm font-medium">
+              <button 
+                onClick={() => window.location.href = "/dashboard"}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-sm font-medium"
+              >
                 <User className="w-4 h-4" />
-                <span>Profile</span>
+                <span>{user.name}</span>
               </button>
-              <button className="p-2.5 rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-colors">
+              <button 
+                onClick={handleLogout}
+                className="p-2.5 rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+                title="Logout"
+              >
                 <LogOut className="w-5 h-5" />
               </button>
             </>
