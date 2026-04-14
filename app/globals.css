@@ -14,7 +14,11 @@
   --radius-2xl: 1.5rem;
   --radius-3xl: 2rem;
 
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-aurora: aurora 60s linear infinite;
 }
 
 :root {
@@ -27,8 +31,11 @@
     @apply border-white/10;
   }
   body {
-    @apply bg-black text-white antialiased selection:bg-primary/30;
+    @apply bg-black text-white antialiased font-sans selection:bg-primary/30;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
   }
 }
 
