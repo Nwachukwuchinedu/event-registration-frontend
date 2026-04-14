@@ -121,6 +121,20 @@ export default function RegisterPage() {
                     className="w-full h-12 bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all text-xs"
                   />
                 </div>
+                <div className="px-1 space-y-1">
+                   <p className="text-[10px] text-white/30 flex items-center gap-1.5">
+                      <CheckCircle2 className={cn("w-3 h-3", password.length >= 8 ? "text-emerald-500" : "text-white/20")} />
+                      At least 8 characters
+                   </p>
+                   <p className="text-[10px] text-white/30 flex items-center gap-1.5">
+                      <CheckCircle2 className={cn("w-3 h-3", /[A-Z]/.test(password) ? "text-emerald-500" : "text-white/20")} />
+                      One uppercase letter
+                   </p>
+                   <p className="text-[10px] text-white/30 flex items-center gap-1.5">
+                      <CheckCircle2 className={cn("w-3 h-3", /[0-9]/.test(password) ? "text-emerald-500" : "text-white/20")} />
+                      One number
+                   </p>
+                </div>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-white/70 ml-1">Confirm</label>

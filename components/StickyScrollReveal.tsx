@@ -23,7 +23,7 @@ export default function StickyScrollReveal({ content, className }: StickyScrollR
   return (
     <div
       ref={containerRef}
-      className={cn("relative h-[400vh] flex flex-col items-start gap-10 px-6", className)}
+      className={cn("relative h-[600vh] flex flex-col items-start gap-10 px-6", className)}
     >
       <div className="sticky top-0 flex h-screen w-full items-center justify-between overflow-hidden gap-12">
         {/* Left side: Text Content */}
@@ -33,16 +33,18 @@ export default function StickyScrollReveal({ content, className }: StickyScrollR
             const start = index / content.length;
             const end = (index + 1) / content.length;
             
+            // Adjust ranges: fade in sooner, stay for 60% of segment, fade out later
+            // [start, start + fadeIntime, end - fadeOutTime, end]
             // eslint-disable-next-line react-hooks/rules-of-hooks
-            const opacity = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [0, 1, 1, 0]);
+            const opacity = useTransform(scrollYProgress, [start, start + 0.05, end - 0.05, end], [0, 1, 1, 0]);
             // eslint-disable-next-line react-hooks/rules-of-hooks
-            const translateY = useTransform(scrollYProgress, [start, start + 0.1], [20, 0]);
+            const translateY = useTransform(scrollYProgress, [start, start + 0.1], [40, 0]);
 
             return (
               <motion.div
                 key={item.title + index}
                 style={{ opacity, y: translateY }}
-                className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex flex-col gap-4"
+                className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex flex-col gap-6"
               >
                 <h2 className="text-4xl md:text-6xl font-black font-heading tracking-tighter text-white">
                   {item.title}

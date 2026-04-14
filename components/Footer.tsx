@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Calendar, Globe, Twitter, Instagram, Github, Mail } from "lucide-react";
+import { Calendar, Globe, MessageSquare, Camera, Code, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -44,9 +44,9 @@ export default function Footer() {
         <div>
           <h4 className="text-white font-bold mb-6 font-heading">Connect</h4>
           <div className="flex gap-4 mb-6">
-            <SocialLink href="#" icon={<Twitter className="w-5 h-5" />} />
-            <SocialLink href="#" icon={<Instagram className="w-5 h-5" />} />
-            <SocialLink href="#" icon={<Github className="w-5 h-5" />} />
+            <SocialLink href="#" icon={<MessageSquare className="w-5 h-5" />} />
+            <SocialLink href="#" icon={<Camera className="w-5 h-5" />} />
+            <SocialLink href="#" icon={<Code className="w-5 h-5" />} />
             <SocialLink href="#" icon={<Mail className="w-5 h-5" />} />
           </div>
           <p className="text-xs text-white/30">
