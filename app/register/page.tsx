@@ -7,6 +7,7 @@ import { ArrowRight, Mail, Lock, User, Loader2, CheckCircle2 } from "lucide-reac
 import { authApi } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import GlassCard from "@/components/GlassCard";
+import { cn } from "@/lib/utils";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
