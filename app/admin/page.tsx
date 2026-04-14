@@ -20,7 +20,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const userStr = localStorage.getItem("user");
-    const user = userStr ? JSON.parse(userStr) : null;
+    const user = (userStr && userStr !== "undefined") ? JSON.parse(userStr) : null;
 
     if (!user || user.role !== "admin") {
       router.push("/");

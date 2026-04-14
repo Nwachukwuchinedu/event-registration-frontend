@@ -24,7 +24,13 @@ export default function DashboardPage() {
       return;
     }
 
-    if (storedUser) setUser(JSON.parse(storedUser));
+    if (storedUser && storedUser !== "undefined") {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (err) {
+        console.error("Failed to parse user data:", err);
+      }
+    }
 
     async function fetchMyRegistrations() {
       try {
