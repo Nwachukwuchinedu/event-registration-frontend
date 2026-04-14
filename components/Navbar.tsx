@@ -121,12 +121,15 @@ export default function Navbar() {
   );
 }
 
-function NavLink({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) {
+function NavLink({ href, children, onClick, className }: { href: string; children: React.ReactNode; onClick?: () => void; className?: string }) {
   return (
     <Link
       href={href}
       onClick={onClick}
-      className="text-sm font-medium text-white/70 hover:text-white transition-colors relative group"
+      className={cn(
+        "text-sm font-medium text-white/70 hover:text-white transition-colors relative group",
+        className
+      )}
     >
       {children}
       <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300" />
