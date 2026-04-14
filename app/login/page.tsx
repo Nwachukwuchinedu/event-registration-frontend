@@ -24,7 +24,13 @@ export default function LoginPage() {
       const response = await authApi.login({ email, password });
       localStorage.setItem("auth_token", response.token);
       localStorage.setItem("user", JSON.stringify(response.user));
-      router.push("/dashboard");
+      
+      if (response.user.role === "admin") {
+        router.push("/admin");
+      } else {
+        router.push("/dashboard");
+      }
+      
       router.refresh();
     } catch (err: any) {
       setError(err.message || "Invalid credentials");
